@@ -3,16 +3,10 @@ use std::fs::File;
 use std::io::Read;
 
 fn read_file(path: &str) -> String {
-    let mut file = match File::open(path) {
-        Err(err) => panic!("Couldn't open: {}", err.description()),
-        Ok(file) => file,
-    };
-
+    let mut file = File::open(path).unwrap();
     let mut data = String::new();
-    match file.read_to_string(&mut data) {
-        Err(err) => panic!("Couldn't read: {}", err.description()),
-        Ok(_) => (),
-    };
+
+    file.read_to_string(&mut data).unwrap();
     data
 }
 
