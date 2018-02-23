@@ -13,7 +13,7 @@ fn read_file(path: &str) -> String {
         Err(err) => panic!("Couldn't read: {}", err.description()),
         Ok(_) => (),
     };
-    return data;
+    data
 }
 
 fn main() {
