@@ -1,30 +1,16 @@
+use std::error::Error;
 use std::fs::File;
 use std::io::Read;
-use std::error::Error;
-use std::str::from_utf8;
 
 fn main() {
     let mut file = match File::open("hello.txt") {
         Err(err) => panic!("Couldn't open: {}", err.description()),
-        Ok(value) => value,
+        Ok(file) => file,
     };
 
-    let stat = match file.metadata() {
-        Err(err) => panic!("Couldn't get stat: {}", err.description()),
-        Ok(value) => value,
-    };
-
-    let mut buffer = vec![0; stat.len() as usize];
-
-    match file.read(&mut buffer) {
+    let mut data = String::new();
+    match file.read_to_string(&mut data) {
         Err(err) => panic!("Couldn't read: {}", err.description()),
-        Ok(_) => (),
+        Ok(_) => println!("Content is: {}", data),
     };
-
-    let data = match from_utf8(&buffer) {
-        Err(err) => panic!("Couldn't convert buffer to string: {}", err.description()),
-        Ok(value) => value,
-    };
-
-    println!("Content is: {}", data);
 }
