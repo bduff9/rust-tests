@@ -13,11 +13,7 @@ fn main() {
     let hello = read_file("hello.txt").expect("Couldn't read 'hello.txt'.");
     let world = read_file("world.txt").expect("Couldn't read 'world.txt'.");
 
-    let mut hello_world = String::new();
-    hello_world.push_str(&hello);
-    hello_world.push_str(" ");
-    hello_world.push_str(&world);
-    hello_world.push_str("!");
+    let hello_world = hello + " " + &world + "!";
 
     println!("Content is: {}", hello_world);
 }
