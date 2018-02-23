@@ -1,17 +1,17 @@
 use std::fs::File;
-use std::io::Read;
+use std::io::{ Read, Error };
 
-fn read_file(path: &str) -> String {
-    let mut file = File::open(path).expect("Couldn't open file.");
+fn read_file(path: &str) -> Result<String, Error> {
+    let mut file = try!(File::open(path));
     let mut data = String::new();
 
-    file.read_to_string(&mut data).expect("Couldn't read file");
-    data
+    try!(file.read_to_string(&mut data));
+    Ok(data)
 }
 
 fn main() {
-    let hello = read_file("hello.txt");
-    let world = read_file("world.txt");
+    let hello = read_file("hello.txt").expect("Couldn't read 'hello.txt'.");
+    let world = read_file("world.txt").expect("Couldn't read 'world.txt'.");
 
     println!("Content is: {}", hello);
     println!("Content is: {}", world);
